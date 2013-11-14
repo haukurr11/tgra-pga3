@@ -19,6 +19,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float count = 0;
 	private Skybox skybox;
 	private Cube cube;
+	private Tunnel tunnel;
 	FloatBuffer vertexBuffer;
 		
 	@Override
@@ -69,7 +70,17 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 									  0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f});
 		
 		vertexBuffer.rewind();
-
+		
+		tunnel = Tunnel.createBicubicBezierPatch(new Point3D[][] {
+				{
+				new Point3D(0.0f, 0.0f, 0.0f), new Point3D(0.0f, 2.0f, 1.0f), new Point3D(0.0f, 2.0f, 2.0f), new Point3D(0.0f, 0.0f, 3.0f)},
+				{new Point3D(1.0f, 2.0f, 0.0f), new Point3D(1.0f, 0.0f, 1.0f), new Point3D(1.0f, 0.0f, 2.0f), new Point3D(1.0f, 2.0f, 3.0f)},
+				{new Point3D(2.0f, 2.0f, 0.0f), new Point3D(2.0f, 0.0f, 1.0f), new Point3D(2.0f, 0.0f, 2.0f), new Point3D(2.0f, 2.0f, 3.0f)},
+				{new Point3D(3.0f, 0.0f, 0.0f), new Point3D(3.0f, 2.0f, 1.0f), new Point3D(3.0f, 2.0f, 2.0f), new Point3D(3.0f, 0.0f, 3.0f)
+				}
+		},
+		200, 200);
+		
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		cam = new Camera(new Point3D(0.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
 	}
@@ -231,8 +242,14 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		cube.setCoord(this.cam.eye.x+10f,this.cam.eye.y-5f,this.cube.z);
 		cube.draw();
 		Gdx.gl11.glPopMatrix();
+		
+		Gdx.gl11.glPushMatrix();
+		Gdx.gl11.glTranslatef(1f,1f,1f);
+		tunnel.draw();
+		Gdx.gl11.glPopMatrix();
+		
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-
+		
 		drawFloor(50);
 			
 	}
