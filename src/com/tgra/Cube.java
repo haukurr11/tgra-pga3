@@ -16,8 +16,14 @@ public class Cube {
 	Texture tex;
 	float angle;
 	float jumpheight;
+	float y;
+	float x;
+	float z;
 	public Cube()
 	{
+		this.x=0;
+		this.y=0;
+		this.z=0;
 		jumpheight = 0;
 		angle = 0;
 		vertexBuffer = BufferUtils.newFloatBuffer(72);
@@ -55,6 +61,11 @@ public class Cube {
 
 	
 	}
+	public void setCoord(float x,float y,float z) {
+		this.x=x;
+		this.y=y;
+		this.z=z;
+	}
 	public void rotate(float angle) {
 		this.angle += angle;
 		this.angle = this.angle % 360;
@@ -66,15 +77,15 @@ public class Cube {
 
 	public void draw()
 	{
-		System.out.println(this.angle);
 		Gdx.gl11.glPushMatrix();
 		Gdx.gl11.glShadeModel(GL11.GL_SMOOTH);
+		Gdx.gl11.glTranslatef(this.x, this.y,this.z);
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		
-		Gdx.gl11.glRotatef(-this.angle, 1f, 0f, 0f);
-		Gdx.gl11.glTranslatef(0.5f, -0.5f+this.jumpheight, 0f);
+		//Gdx.gl11.glRotatef(-this.angle, 1f, 0f, 0f);
 
-		Gdx.gl11.glRotatef(40f, 0f, 0f, 1f);
+		float[] materialDiffuse = {0f, 0f, 255.0f, 0.0f};
+		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
 		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		Gdx.gl11.glNormal3f(0.0f, 0.0f, 1.0f);

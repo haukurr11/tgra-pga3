@@ -24,6 +24,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	@Override
 	public void create() {
 		cube = new Cube();
+		cube.setCoord(cube.x, cube.y, 5f);
 		skybox = new Skybox();
 		
 		Gdx.input.setInputProcessor(this);
@@ -70,7 +71,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		vertexBuffer.rewind();
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-		cam = new Camera(new Point3D(0.0f, 3.0f, 2.0f), new Point3D(200.0f, 3.0f, 3.0f), new Vector3D(0.0f, 1.0f, 0.0f));
+		cam = new Camera(new Point3D(0.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
 	}
 
 	@Override
@@ -116,11 +117,13 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		if(Gdx.input.isKeyPressed(Input.Keys.S)) 
 			cam.slide(0.0f, 0.0f, 10.0f * deltaTime);
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
-			cam.slide(-10.0f * deltaTime, 0.0f, 0.0f);
+		if(Gdx.input.isKeyPressed(Input.Keys.A))  {
+			cube.z -= 10.0f * deltaTime;
+		}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) 
-			cam.slide(10.0f * deltaTime, 0.0f, 0.0f);
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) { 
+			cube.z +=10.0f * deltaTime;
+		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.R)) 
 			cam.slide(0.0f, 10.0f * deltaTime, 0.0f);
@@ -149,6 +152,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void drawBox() {
+
+		float[] materialDiffuse = {255f, 0f, 0f, 0.0f};
+		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
 		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		Gdx.gl11.glNormal3f(1.0f, 0.0f, 0.0f);
@@ -165,7 +171,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	
 	private void drawFloor(float size) {
 		for(float fx = 0.0f; fx < size; fx += 1.0) {
-			for(float fz = 0.0f; fz < size; fz += 1.0) {
+			for(float fz = 0.0f; fz < size/4; fz += 1.0) {
 				Gdx.gl11.glPushMatrix();
 				Gdx.gl11.glTranslatef(fx, 1.0f, fz);
 				Gdx.gl11.glScalef(0.95f, 0.95f, 0.95f);
@@ -222,8 +228,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glPopMatrix();
 		
 		Gdx.gl11.glPushMatrix();
-		Gdx.gl11.glTranslatef(cam.eye.x+2, cam.eye.y, cam.eye.z);
-
+		cube.setCoord(this.cam.eye.x+10f,this.cam.eye.y-5f,this.cube.z);
 		cube.draw();
 		Gdx.gl11.glPopMatrix();
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
