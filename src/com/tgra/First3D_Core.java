@@ -44,30 +44,64 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 
 		vertexBuffer = BufferUtils.newFloatBuffer(144);
-		vertexBuffer.put(new float[] {-0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-									  0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
-									  -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f,
-									  0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f,
-									  -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-									  0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
-									  -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f,
-									  0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f});
+		vertexBuffer.put(new float[] {
+				-0.5f, -0.5f, -0.5f, 
+				-0.5f, 0.5f, -0.5f,
+				0.5f, -0.5f, -0.5f, 
+				0.5f, 0.5f, -0.5f,
+				0.5f, -0.5f, -0.5f, 
+				0.5f, 0.5f, -0.5f,
+				0.5f, -0.5f, 0.5f, 
+				0.5f, 0.5f, 0.5f,
+				0.5f, -0.5f, 0.5f, 
+				0.5f, 0.5f, 0.5f,
+				-0.5f, -0.5f, 0.5f, 
+				-0.5f, 0.5f, 0.5f,
+				-0.5f, -0.5f, 0.5f, 
+				-0.5f, 0.5f, 0.5f,
+				-0.5f, -0.5f, -0.5f, 
+				-0.5f, 0.5f, -0.5f,
+				-0.5f, 0.5f, -0.5f, 
+				-0.5f, 0.5f, 0.5f,
+				0.5f, 0.5f, -0.5f, 
+				0.5f, 0.5f, 0.5f,
+				-0.5f, -0.5f, -0.5f, 
+				-0.5f, -0.5f, 0.5f,
+				0.5f, -0.5f, -0.5f, 
+				0.5f, -0.5f, 0.5f
+				
+				
+				
+				-0.5f, -0.5f, -0.5f, 
+				 -0.5f, 0.5f, -0.5f,
+				  2.0f, -0.5f, 0f,
+				  2.0f, -0.5f, 0f,
+				  
+				  0.5f, -0.5f, -0.5f, 
+				  0.5f, 0.5f, -0.5f,
+				  0.5f, -0.5f, 0.5f, 
+				  0.5f, 0.5f, 0.5f,
+				  
+				  2f, -0.5f, 0f,
+				  2f,-0.5f, 0f,
+				  -0.5f, -0.5f, 0.5f,
+				  -0.5f, 0.5f, 0.5f,
+				  
+				  -0.5f, -0.5f, 0.5f, 
+				  -0.5f, 0.5f, 0.5f,
+				  -0.5f, -0.5f, -0.5f, 
+				  -0.5f, 0.5f, -0.5f,
+				  
+				  -0.5f, 0.5f, -0.5f,
+				  -0.5f, 0.5f, 0.5f,
+				  2f, -0.5f, 0f,
+				  2f, -0.5f, 0f,
+				  
+				  -0.5f, -0.5f, -0.5f, 
+				  -0.5f, -0.5f, 0.5f,
+				  2f, -0.5f, 0f, 
+				  2f, -0.5f, 0f
+			 });
 		
 		vertexBuffer.rewind();
 		
@@ -164,8 +198,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	
 	private void drawBox() {
 
-		float[] materialDiffuse = {255f, 0f, 0f, 0.0f};
-		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
 		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		Gdx.gl11.glNormal3f(1.0f, 0.0f, 0.0f);
@@ -193,65 +225,42 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void display() {
-		Gdx.gl11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
-		cam.setModelViewMatrix();
-		Gdx.gl11.glEnable(GL11.GL_LIGHTING);
-		Gdx.gl11.glEnable(GL11.GL_LIGHT0);
-		Gdx.gl11.glEnable(GL11.GL_LIGHT1);
-		Gdx.gl11.glEnable(GL11.GL_DEPTH_TEST);
-		
-		
-		Gdx.gl11.glPushMatrix();
-		Gdx.gl11.glTranslatef(0f, 0.5f, 0f);
-		
 
-		Gdx.gl11.glPopMatrix();
 		
-		
-		Gdx.gl11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, 100.0f);
+        Gdx.gl11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
+        cam.setModelViewMatrix();
+                        
+        // Configure light 0
+        float[] lightDiffuse = {1.0f, 1.0f, 1.0f, 1.0f};
+        Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, lightDiffuse, 0);
 
-		float[] lightDiffuse = {0.8f, 0.8f, 0.7f, 1.0f};
-		float[] lightAmbient = {1.0f, 1.0f, 1.0f, 1.0f};
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, lightDiffuse, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_AMBIENT, lightAmbient, 0);
+        float[] lightPosition = {this.wiggleValue, 10.0f, 15.0f, 1.0f};
+        Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition, 0);
 
-		float[] lightPosition = {1.0f, 1.0f, 1.0f, 1.0f};
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition, 0);
+        // Configure light 1
+        float[] lightDiffuse1 = {0.5f, 0.5f, 0.5f, 1.0f};
+        Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_DIFFUSE, lightDiffuse1, 0);
 
-		float[] lightDiffuse1 = {0.8f, 0.8f, 0.7f, 1.0f};
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_DIFFUSE, lightDiffuse1, 0);
+        float[] lightPosition1 = {-5.0f, -10.0f, -15.0f, 1.0f};
+        Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, lightPosition1, 0);
+        
 
-		float[] lightPosition1 = {0.0f, 5.0f, 10.0f, 1.0f};
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, lightPosition1, 0);
-
-
-		float[] materialDiffuse = {10.0f, 10.0f, 10.0f, 10.0f};
-		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
-		
-		float[] specLight0 = {0.5f, 0.5f, 0.5f, 1.0f};
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_SPECULAR, specLight0, 0);
-		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_SHININESS, materialDiffuse, 0); 
-		
-		Gdx.gl11.glPushMatrix();
-		Gdx.gl11.glTranslatef(cam.eye.x, cam.eye.y, cam.eye.z);
-		Gdx.gl11.glScalef(150f,150f,150f);
-		skybox.Render();
-		Gdx.gl11.glPopMatrix();
-		
-		Gdx.gl11.glPushMatrix();
-		cube.setCoord(this.cam.eye.x+10f,this.cam.eye.y-5f,this.cube.z);
-		cube.draw();
-		Gdx.gl11.glPopMatrix();
-		
-		Gdx.gl11.glPushMatrix();
-		Gdx.gl11.glTranslatef(1f,1f,1f);
-		tunnel.draw();
-		Gdx.gl11.glPopMatrix();
-		
+        
+        Gdx.gl11.glPushMatrix();
+        this.cube.setCoord(this.cam.eye.x+10f, this.cam.eye.y-5f, this.cube.z);
+        this.cube.draw();
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
+
+		Gdx.gl11.glTranslatef(this.cam.eye.x, this.cam.eye.y, this.cam.eye.z);
+		Gdx.gl11.glScalef(150f,150f,150f);
+		this.skybox.Render();		
 		
-		drawFloor(50);
-			
+        Gdx.gl11.glPopMatrix();
+
+        drawFloor(50);
+
+        Gdx.gl11.glTranslatef(0,1f, 0f);
+        this.tunnel.draw();
 	}
 
 	@Override
