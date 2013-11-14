@@ -101,18 +101,15 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		float deltaTime = Gdx.graphics.getDeltaTime();
 
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
-			cam.pitch(-90.0f * deltaTime);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
-			cam.pitch(90.0f * deltaTime);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) { 
 			cam.roll(90.0f * deltaTime);
+			cube.rotate(90f * deltaTime);
+		}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) 
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			cam.roll(-90.0f * deltaTime);
-		
+			cube.rotate(-90f * deltaTime);
+		}
 		if(Gdx.input.isKeyPressed(Input.Keys.W)) 
 			cam.slide(0.0f, 0.0f, -10.0f * deltaTime);
 		
@@ -225,8 +222,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glPopMatrix();
 		
 		Gdx.gl11.glPushMatrix();
-		//Gdx.gl11.glTranslatef(cam.eye.x+2, cam.eye.y-0.5f, cam.eye.z);
-		Gdx.gl11.glTranslatef(0f, 10f, 0f);
+		Gdx.gl11.glTranslatef(cam.eye.x+2, cam.eye.y, cam.eye.z);
 
 		cube.draw();
 		Gdx.gl11.glPopMatrix();

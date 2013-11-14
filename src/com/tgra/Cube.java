@@ -1,6 +1,7 @@
 package com.tgra;
 
 import java.nio.FloatBuffer;
+import java.util.Timer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
@@ -13,23 +14,26 @@ public class Cube {
 	FloatBuffer texCoordBuffer;
 	
 	Texture tex;
-	
+	float angle;
+	float jumpheight;
 	public Cube()
 	{
+		jumpheight = 0;
+		angle = 0;
 		vertexBuffer = BufferUtils.newFloatBuffer(72);
 		vertexBuffer.put(new float[] {
 				 -0.5f, -0.5f, -0.5f, 
 				 -0.5f, 0.5f, -0.5f,
-				  0.5f, -0.5f, 0f,
-				  0.5f, -0.5f, 0f,
+				  2.0f, -0.5f, 0f,
+				  2.0f, -0.5f, 0f,
 				  
 				  0.5f, -0.5f, -0.5f, 
 				  0.5f, 0.5f, -0.5f,
 				  0.5f, -0.5f, 0.5f, 
 				  0.5f, 0.5f, 0.5f,
 				  
-				  0.5f, -0.5f, 0f,
-				  0.5f,-0.5f, 0f,
+				  2f, -0.5f, 0f,
+				  2f,-0.5f, 0f,
 				  -0.5f, -0.5f, 0.5f,
 				  -0.5f, 0.5f, 0.5f,
 				  
@@ -40,24 +44,37 @@ public class Cube {
 				  
 				  -0.5f, 0.5f, -0.5f,
 				  -0.5f, 0.5f, 0.5f,
-				  0.5f, -0.5f, 0f,
-				  0.5f, -0.5f, 0f,
+				  2f, -0.5f, 0f,
+				  2f, -0.5f, 0f,
 				  
 				  -0.5f, -0.5f, -0.5f, 
 				  -0.5f, -0.5f, 0.5f,
-				  0.5f, -0.5f, 0f, 
-				  0.5f, -0.5f, 0f});
+				  2f, -0.5f, 0f, 
+				  2f, -0.5f, 0f});
 		vertexBuffer.rewind();
+
 	
 	}
+	public void rotate(float angle) {
+		this.angle += angle;
+		this.angle = this.angle % 360;
+	}
 	
+	public void jump() {
+		
+	}
 
 	public void draw()
 	{
+		System.out.println(this.angle);
 		Gdx.gl11.glPushMatrix();
 		Gdx.gl11.glShadeModel(GL11.GL_SMOOTH);
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
+		
+		Gdx.gl11.glRotatef(-this.angle, 1f, 0f, 0f);
+		Gdx.gl11.glTranslatef(0.5f, -0.5f+this.jumpheight, 0f);
 
+		Gdx.gl11.glRotatef(40f, 0f, 0f, 1f);
 		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		Gdx.gl11.glNormal3f(0.0f, 0.0f, 1.0f);
