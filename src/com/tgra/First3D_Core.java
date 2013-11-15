@@ -29,7 +29,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		jumping = false;
 		cube = new Cube();
 		floor = new Floor();
-		cube.setCoord(cube.x, 5.0f, 5f);
+		cube.setCoord(cube.x, 5.0f, 1f);
 		skybox = new Skybox();
 		
 		Gdx.input.setInputProcessor(this);
@@ -90,7 +90,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		200, 200);
 		
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-		cam = new Camera(new Point3D(0.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
+		cam = new Camera(new Point3D(-10.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
 	}
 
 	@Override
@@ -107,11 +107,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	
 	private void update() {
 
-		System.out.println(floor.collides(cube));
+		if(cube.y < -4.0)
+			create();
 		if(jumping) {
 			System.out.println("JUMPING");
 			float deltaTime = Gdx.graphics.getDeltaTime();
-			cube.y += deltaTime * 7.5;
+			cube.y += deltaTime * 20.5;
 			if(cube.y > 5.0) {
 				jumping = false;
 			}
@@ -119,7 +120,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		if(!floor.collides(cube)) {
 			System.out.println("YES");
 			float deltaTime = Gdx.graphics.getDeltaTime();
-			cube.y -= deltaTime * 5.0;
+			cube.y -= deltaTime * 9.0;
 		}
 		if(this.wiggleLights){
 			count += 0.03;
@@ -135,32 +136,24 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		float deltaTime = Gdx.graphics.getDeltaTime();
 
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) { 
-			cam.roll(90.0f * deltaTime);
-			cube.rotate(90f * deltaTime);
-		}
-		
 
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) { 
 			if(floor.collides(cube))
 			jumping = true;
 		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			cam.roll(-90.0f * deltaTime);
-			cube.rotate(-90f * deltaTime);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.W)) 
+		cam.slide(0.0f, 0.0f, -10.0f * deltaTime);
+
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
 			cam.slide(0.0f, 0.0f, -10.0f * deltaTime);
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.S)) 
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
 			cam.slide(0.0f, 0.0f, 10.0f * deltaTime);
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.A))  {
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))  {
 			cube.z -= 10.0f * deltaTime;
 		}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) { 
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) { 
 			cube.z +=10.0f * deltaTime;
 		}
 		
