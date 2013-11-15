@@ -74,7 +74,7 @@ public class Cube {
 	}
 	
 	public void jump() {
-		
+		this.y += 5.5;
 	}
 
 	public void draw()

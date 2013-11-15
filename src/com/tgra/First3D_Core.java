@@ -19,13 +19,17 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float count = 0;
 	private Skybox skybox;
 	private Cube cube;
+	private Floor floor;
 	private Tunnel tunnel;
+	private boolean jumping;
 	FloatBuffer vertexBuffer;
 		
 	@Override
 	public void create() {
+		jumping = false;
 		cube = new Cube();
-		cube.setCoord(cube.x, cube.y, 5f);
+		floor = new Floor();
+		cube.setCoord(cube.x, 5.0f, 5f);
 		skybox = new Skybox();
 		
 		Gdx.input.setInputProcessor(this);
@@ -43,7 +47,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 
-		vertexBuffer = BufferUtils.newFloatBuffer(144);
+		vertexBuffer = BufferUtils.newFloatBuffer(72);
 		vertexBuffer.put(new float[] {
 				-0.5f, -0.5f, -0.5f, 
 				-0.5f, 0.5f, -0.5f,
@@ -71,37 +75,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 				0.5f, -0.5f, 0.5f
 				
 				
-				
-				-0.5f, -0.5f, -0.5f, 
-				 -0.5f, 0.5f, -0.5f,
-				  2.0f, -0.5f, 0f,
-				  2.0f, -0.5f, 0f,
-				  
-				  0.5f, -0.5f, -0.5f, 
-				  0.5f, 0.5f, -0.5f,
-				  0.5f, -0.5f, 0.5f, 
-				  0.5f, 0.5f, 0.5f,
-				  
-				  2f, -0.5f, 0f,
-				  2f,-0.5f, 0f,
-				  -0.5f, -0.5f, 0.5f,
-				  -0.5f, 0.5f, 0.5f,
-				  
-				  -0.5f, -0.5f, 0.5f, 
-				  -0.5f, 0.5f, 0.5f,
-				  -0.5f, -0.5f, -0.5f, 
-				  -0.5f, 0.5f, -0.5f,
-				  
-				  -0.5f, 0.5f, -0.5f,
-				  -0.5f, 0.5f, 0.5f,
-				  2f, -0.5f, 0f,
-				  2f, -0.5f, 0f,
-				  
-				  -0.5f, -0.5f, -0.5f, 
-				  -0.5f, -0.5f, 0.5f,
-				  2f, -0.5f, 0f, 
-				  2f, -0.5f, 0f
-			 });
+					 });
 		
 		vertexBuffer.rewind();
 		
@@ -132,7 +106,21 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
-		
+
+		System.out.println(floor.collides(cube));
+		if(jumping) {
+			System.out.println("JUMPING");
+			float deltaTime = Gdx.graphics.getDeltaTime();
+			cube.y += deltaTime * 7.5;
+			if(cube.y > 5.0) {
+				jumping = false;
+			}
+		}
+		if(!floor.collides(cube)) {
+			System.out.println("YES");
+			float deltaTime = Gdx.graphics.getDeltaTime();
+			cube.y -= deltaTime * 5.0;
+		}
 		if(this.wiggleLights){
 			count += 0.03;
 			this.wiggleValue = (float) Math.sin(count) * 10;
@@ -150,6 +138,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) { 
 			cam.roll(90.0f * deltaTime);
 			cube.rotate(90f * deltaTime);
+		}
+		
+
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) { 
+			if(floor.collides(cube))
+			jumping = true;
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -196,34 +190,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glPopMatrix();
 	}
 	
-	private void drawBox() {
-
-		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
-		Gdx.gl11.glNormal3f(1.0f, 0.0f, 0.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 4, 4);
-		Gdx.gl11.glNormal3f(0.0f, 0.0f, 1.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 8, 4);
-		Gdx.gl11.glNormal3f(-1.0f, 0.0f, 0.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 12, 4);
-		Gdx.gl11.glNormal3f(0.0f, 1.0f, 0.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 16, 4);
-		Gdx.gl11.glNormal3f(0.0f, -1.0f, 0.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 20, 4);
-	}
-	
-	private void drawFloor(float size) {
-		for(float fx = 0.0f; fx < size; fx += 1.0) {
-			for(float fz = 0.0f; fz < size/4; fz += 1.0) {
-				Gdx.gl11.glPushMatrix();
-				Gdx.gl11.glTranslatef(fx, 1.0f, fz);
-				Gdx.gl11.glScalef(0.95f, 0.95f, 0.95f);
-				drawBox();
-				Gdx.gl11.glPopMatrix();
-			}
-		}
-	}
-	
 	private void display() {
 
 		
@@ -247,7 +213,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
         
         Gdx.gl11.glPushMatrix();
-        this.cube.setCoord(this.cam.eye.x+10f, this.cam.eye.y-5f, this.cube.z);
+        this.cube.setCoord(this.cam.eye.x+10f, this.cube.y, this.cube.z);
         this.cube.draw();
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 
@@ -257,7 +223,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
         Gdx.gl11.glPopMatrix();
 
-        drawFloor(50);
+        floor.draw();
 
         Gdx.gl11.glTranslatef(0,1f, 0f);
         this.tunnel.draw();
