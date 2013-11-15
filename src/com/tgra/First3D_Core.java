@@ -81,10 +81,10 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		tunnel = Tunnel.createBicubicBezierPatch(new Point3D[][] {
 				{
-				new Point3D(0.0f, 0.0f, 0.0f), new Point3D(0.0f, 2.0f, 1.0f), new Point3D(0.0f, 2.0f, 2.0f), new Point3D(0.0f, 0.0f, 3.0f)},
-				{new Point3D(1.0f, 2.0f, 0.0f), new Point3D(1.0f, 0.0f, 1.0f), new Point3D(1.0f, 0.0f, 2.0f), new Point3D(1.0f, 2.0f, 3.0f)},
-				{new Point3D(2.0f, 2.0f, 0.0f), new Point3D(2.0f, 0.0f, 1.0f), new Point3D(2.0f, 0.0f, 2.0f), new Point3D(2.0f, 2.0f, 3.0f)},
-				{new Point3D(3.0f, 0.0f, 0.0f), new Point3D(3.0f, 2.0f, 1.0f), new Point3D(3.0f, 2.0f, 2.0f), new Point3D(3.0f, 0.0f, 3.0f)
+				new Point3D(0.0f, 0.0f, 0.0f), new Point3D(0.0f, 4.0f, 1.0f), new Point3D(0.0f, 4.0f, 2.0f), new Point3D(0.0f, 0.0f, 3.0f)},
+				{new Point3D(1.0f, 0.0f, 0.0f), new Point3D(1.0f, 4.0f, 1.0f), new Point3D(1.0f, 4.0f, 2.0f), new Point3D(1.0f, 0.0f, 3.0f)},
+				{new Point3D(2.0f, 0.0f, 0.0f), new Point3D(2.0f, 4.0f, 1.0f), new Point3D(2.0f, 4.0f, 2.0f), new Point3D(2.0f, 0.0f, 3.0f)},
+				{new Point3D(3.0f, 0.0f, 0.0f), new Point3D(3.0f, 4.0f, 1.0f), new Point3D(3.0f, 4.0f, 2.0f), new Point3D(3.0f, 0.0f, 3.0f)
 				}
 		},
 		200, 200);
