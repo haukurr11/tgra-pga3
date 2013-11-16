@@ -14,8 +14,15 @@ public class Floor {
 		float z;
 		private FloatBuffer vertexBuffer;
 		
-		public boolean collides(com.tgra.Cube cube) {
+		public boolean ontop(com.tgra.Cube cube) {
 			if(Math.round(cube.y-1) == 1 && Math.abs(Math.round(cube.x)-x) < 1 && Math.abs(Math.round(cube.z)-z) < 1) {
+				return true;
+			}
+			return false;
+		}
+		public boolean collides(com.tgra.Cube cube) {
+			System.out.println(cube.y);
+			if(cube.y < 2 && Math.abs(Math.round(cube.x)-x) < 0.5 && Math.abs(Math.round(cube.z)-z) < 0.5) {
 				return true;
 			}
 			return false;
@@ -94,6 +101,14 @@ public class Floor {
 		for(Cube cube : cubes) {
 			cube.draw();
 		}
+	}
+	public boolean ontop(com.tgra.Cube shuttle) {
+		for(Cube cube : cubes) {
+			if(cube.ontop(shuttle)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	public boolean collides(com.tgra.Cube shuttle) {
 		for(Cube cube : cubes) {

@@ -109,11 +109,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
-
-		if(cube.y < -4.0)
+		if(cube.y < -4.0 || floor.collides(cube))
 			create();
 		if(jumping) {
-			System.out.println("JUMPING");
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			cube.y += deltaTime * 20.5;
 			if(cube.y > 5.0) {
@@ -122,8 +120,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			}
 		}
 		
-		if(!floor.collides(cube)) {
-			System.out.println("YES");
+		if(!floor.ontop(cube)) {
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			cube.y -= deltaTime * 9.0;
 		}
@@ -156,7 +153,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) { 
-			if(floor.collides(cube))
+			if(floor.ontop(cube))
 			jumping = true;
 		}
 
