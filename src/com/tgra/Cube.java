@@ -93,7 +93,7 @@ public class Cube {
 		
 		//Gdx.gl11.glRotatef(-this.angle, 1f, 0f, 0f);
 
-		float[] materialDiffuse = {7f, 0f, 0f, 0.0f};
+		float[] materialDiffuse = {0.1f, 0.1f, 0.1f, 0.0f};
 		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse, 0);
 //		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
 //		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
@@ -114,7 +114,7 @@ public class Cube {
 
 		Gdx.gl11.glPopMatrix();
 
-		float[] materialDiffuse2 = {0.8f, 0.8f,1.8f, 0.0f};
+		float[] materialDiffuse2 = {1f, 1f,1f, 0.0f};
 		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse2, 0);
 
 	}

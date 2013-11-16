@@ -98,6 +98,9 @@ public class Floor {
 	}
 	
 	public void draw() {
+
+		float[] materialDiffuse2 = {0f, 1f,1f, 0.0f};
+		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse2, 0);
 		for(Cube cube : cubes) {
 			cube.draw();
 		}
