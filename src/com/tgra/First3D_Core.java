@@ -17,6 +17,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 {
 	Sound explosionsound;
 	Sound boingsound;
+	Sound shipsound;
 	
 	Camera cam;
 	private boolean ligthBulbState = true;
@@ -32,11 +33,13 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private boolean beginbounce;
 	private float speed;
 	FloatBuffer vertexBuffer;
+	boolean shipstopped = true;
 		
 	@Override
 	public void create() {
 		explosionsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/bomb-03.ogg"));
 		boingsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/boing.ogg"));
+		shipsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/ship.ogg"));
 		speed = 0;
 		beginbounce = false;
 		jumping = false;
@@ -117,6 +120,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			cube.setCoord(1f, 5f,1f);
 			cam.eye.x = -10f;
 			speed = 0;
+			shipsound.stop();
+			shipsound.setPitch(0,0);
+			shipstopped = true;
 		}
 		if(jumping) {
 			float deltaTime = Gdx.graphics.getDeltaTime();
@@ -169,14 +175,22 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		}
 		cam.slide(0.0f, 0.0f, speed * deltaTime);
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)) { 
+			if(shipstopped)
+				   shipsound.loop();
+			shipstopped = false;
 			speed -= 0.2;
+
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))  {
 			if(Math.round(speed)< 0)
 			      speed += 1;
-			if(Math.round(speed) == 0)
+			if(Math.round(speed) == 0) {
 				speed = 0;
+				shipsound.stop();
+				shipstopped = true;
+
+			}
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))  {
