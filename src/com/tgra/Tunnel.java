@@ -15,19 +15,18 @@ public class Tunnel {
 	int widthRes;
 	int depthRes;
 	
-	public Tunnel(int widthRes, int depthRes) {
+	public Tunnel(float x, float z,int widthRes, int depthRes) {
 		this.widthRes = widthRes;
 		this.depthRes = depthRes;
-		this.createBicubicBezierPatch();
+		this.createBicubicBezierPatch(x, z);
 	}
 
-	public void createBicubicBezierPatch() {
+	public void createBicubicBezierPatch(float x, float z) {
 		this.makeBezierPatch(new Point3D[][] {
-				{
-				new Point3D(0.0f, 0.0f, 0.0f), new Point3D(0.0f, 4.0f, 1.0f), new Point3D(0.0f, 4.0f, 2.0f), new Point3D(0.0f, 0.0f, 3.0f)},
-				{new Point3D(1.0f, 0.0f, 0.0f), new Point3D(1.0f, 4.0f, 1.0f), new Point3D(1.0f, 4.0f, 2.0f), new Point3D(1.0f, 0.0f, 3.0f)},
-				{new Point3D(2.0f, 0.0f, 0.0f), new Point3D(2.0f, 4.0f, 1.0f), new Point3D(2.0f, 4.0f, 2.0f), new Point3D(2.0f, 0.0f, 3.0f)},
-				{new Point3D(3.0f, 0.0f, 0.0f), new Point3D(3.0f, 4.0f, 1.0f), new Point3D(3.0f, 4.0f, 2.0f), new Point3D(3.0f, 0.0f, 3.0f)
+				{new Point3D(x, 1.0f, z),		new Point3D(x, 3.0f, z+1.0f), 		new Point3D(x, 3.0f, z+2.0f),		new Point3D(x, 1.0f, z+3.0f)},
+				{new Point3D(x+1.0f, 1.0f, z),	new Point3D(x+1.0f, 3.0f, z+1.0f),	new Point3D(x+1.0f, 3.0f, z+2.0f),	new Point3D(x+1.0f, 1.0f, z+3.0f)},
+				{new Point3D(x+2.0f, 1.0f, z), 	new Point3D(x+2.0f, 3.0f, z+1.0f),	new Point3D(x+2.0f, 3.0f, z+2.0f),	new Point3D(x+2.0f, 1.0f, z+3.0f)},
+				{new Point3D(x+3.0f, 1.0f, z), 	new Point3D(x+3.0f, 3.0f, z+1.0f),	new Point3D(x+3.0f, 3.0f, z+2.0f),	new Point3D(x+3.0f, 1.0f, z+3.0f)
 				}
 		});
 		this.calculateNormals();
