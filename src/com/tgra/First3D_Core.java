@@ -8,6 +8,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g3d.model.still.StillModel;
 
 
 public class First3D_Core implements ApplicationListener, InputProcessor
@@ -109,8 +110,11 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
-		if(cube.y < -4.0 || floor.collides(cube))
-			create();
+		System.out.println(cube.x + " " + cube.y + " " + cube.z);
+		if(cube.y < -4.0 || floor.collides(cube)) {
+			cube.setCoord(1f, 5f,1f);
+			cam.eye.x = -10f;
+		}
 		if(jumping) {
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			cube.y += deltaTime * 20.5;
@@ -300,7 +304,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 
 	@Override
-	public boolean touchMoved(int arg0, int arg1) {
+	public boolean mouseMoved(int arg0, int arg1) {
 		// TODO Auto-generated method stub
 		return false;
 	}

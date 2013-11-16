@@ -6,6 +6,8 @@ import java.util.Timer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.loaders.wavefront.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.model.still.StillModel;
 import com.badlogic.gdx.utils.BufferUtils;
 
 public class Cube {
@@ -19,8 +21,13 @@ public class Cube {
 	float y;
 	float x;
 	float z;
+	StillModel model;
+
 	public Cube()
 	{
+		ObjLoader loader = new ObjLoader();
+		model = loader.loadObj(Gdx.files.internal("assets/model/f14d.obj"), true);
+		
 		this.x=0;
 		this.y=0;
 		this.z=0;
@@ -88,16 +95,23 @@ public class Cube {
 
 		float[] materialDiffuse = {7f, 0f, 0f, 0.0f};
 		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse, 0);
-		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
-		Gdx.gl11.glNormal3f(0.0f, 0.0f, 1.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 8, 4);
-		Gdx.gl11.glNormal3f(-1.0f, 0.0f, 0.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 12, 4);
-		Gdx.gl11.glNormal3f(0.0f, 1.0f, 0.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 16, 4);
-		Gdx.gl11.glNormal3f(0.0f, -1.0f, 0.0f);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 20, 4);
+//		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
+//		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
+//		Gdx.gl11.glNormal3f(0.0f, 0.0f, 1.0f);
+//		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 8, 4);
+//		Gdx.gl11.glNormal3f(-1.0f, 0.0f, 0.0f);
+//		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 12, 4);
+//		Gdx.gl11.glNormal3f(0.0f, 1.0f, 0.0f);
+//		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 16, 4);
+//		Gdx.gl11.glNormal3f(0.0f, -1.0f, 0.0f);
+//		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 20, 4);
+		
+		Gdx.gl11.glScalef(0.15f, 0.15f, 0.15f);
+		Gdx.gl11.glRotatef(-270, 0,1, 0);
+		Gdx.gl11.glRotatef(180, 0,0, 1);
+		Gdx.gl11.glRotatef(90, 1,0, 0);
+        model.render();
+
 		Gdx.gl11.glPopMatrix();
 
 		float[] materialDiffuse2 = {0.8f, 0.8f,1.8f, 0.0f};
