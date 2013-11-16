@@ -92,15 +92,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		vertexBuffer.rewind();
 		
-		tunnel = Tunnel.createBicubicBezierPatch(new Point3D[][] {
-				{
-				new Point3D(0.0f, 0.0f, 0.0f), new Point3D(0.0f, 4.0f, 1.0f), new Point3D(0.0f, 4.0f, 2.0f), new Point3D(0.0f, 0.0f, 3.0f)},
-				{new Point3D(1.0f, 0.0f, 0.0f), new Point3D(1.0f, 4.0f, 1.0f), new Point3D(1.0f, 4.0f, 2.0f), new Point3D(1.0f, 0.0f, 3.0f)},
-				{new Point3D(2.0f, 0.0f, 0.0f), new Point3D(2.0f, 4.0f, 1.0f), new Point3D(2.0f, 4.0f, 2.0f), new Point3D(2.0f, 0.0f, 3.0f)},
-				{new Point3D(3.0f, 0.0f, 0.0f), new Point3D(3.0f, 4.0f, 1.0f), new Point3D(3.0f, 4.0f, 2.0f), new Point3D(3.0f, 0.0f, 3.0f)
-				}
-		},
-		200, 200);
+		tunnel = new Tunnel(200,200);
 		
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		cam = new Camera(new Point3D(-10.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));

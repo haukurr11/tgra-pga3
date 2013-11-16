@@ -15,18 +15,23 @@ public class Tunnel {
 	int widthRes;
 	int depthRes;
 	
-	private Tunnel(int widthRes, int depthRes) {
+	public Tunnel(int widthRes, int depthRes) {
 		this.widthRes = widthRes;
 		this.depthRes = depthRes;
+		this.createBicubicBezierPatch();
 	}
 
-	public static Tunnel createBicubicBezierPatch(Point3D[][] controlPoints,
-			int widthRes, int depthRes) {
-		Tunnel bpatch = new Tunnel(widthRes, depthRes);
-		bpatch.makeBezierPatch(controlPoints);
-		bpatch.calculateNormals();
-		bpatch.loadArrays();
-		return bpatch;
+	public void createBicubicBezierPatch() {
+		this.makeBezierPatch(new Point3D[][] {
+				{
+				new Point3D(0.0f, 0.0f, 0.0f), new Point3D(0.0f, 4.0f, 1.0f), new Point3D(0.0f, 4.0f, 2.0f), new Point3D(0.0f, 0.0f, 3.0f)},
+				{new Point3D(1.0f, 0.0f, 0.0f), new Point3D(1.0f, 4.0f, 1.0f), new Point3D(1.0f, 4.0f, 2.0f), new Point3D(1.0f, 0.0f, 3.0f)},
+				{new Point3D(2.0f, 0.0f, 0.0f), new Point3D(2.0f, 4.0f, 1.0f), new Point3D(2.0f, 4.0f, 2.0f), new Point3D(2.0f, 0.0f, 3.0f)},
+				{new Point3D(3.0f, 0.0f, 0.0f), new Point3D(3.0f, 4.0f, 1.0f), new Point3D(3.0f, 4.0f, 2.0f), new Point3D(3.0f, 0.0f, 3.0f)
+				}
+		});
+		this.calculateNormals();
+		this.loadArrays();
 	}
 
 	private void makeBezierPatch(Point3D[][] controlPoints) {
