@@ -122,6 +122,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			cube.y -= deltaTime * 9.0;
 		}
+		
 		if(this.wiggleLights){
 			count += 0.03;
 			this.wiggleValue = (float) Math.sin(count) * 10;
@@ -141,7 +142,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			if(floor.collides(cube))
 			jumping = true;
 		}
-		cam.slide(0.0f, 0.0f, -10.0f * deltaTime);
 
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
 			cam.slide(0.0f, 0.0f, -10.0f * deltaTime);
@@ -206,7 +206,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
         
         Gdx.gl11.glPushMatrix();
-        this.cube.setCoord(this.cam.eye.x+10f, this.cube.y, this.cube.z);
+        this.cube.setCoord(this.cam.eye.x+11f, this.cube.y, this.cube.z);
         this.cube.draw();
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 
