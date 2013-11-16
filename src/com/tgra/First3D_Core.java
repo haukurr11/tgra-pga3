@@ -25,10 +25,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private boolean jumping;
 	private boolean bouncing;
 	private boolean beginbounce;
+	private float speed;
 	FloatBuffer vertexBuffer;
 		
 	@Override
 	public void create() {
+		speed = 0;
 		beginbounce = false;
 		jumping = false;
 		cube = new Cube();
@@ -114,6 +116,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		if(cube.y < -4.0 || floor.collides(cube)) {
 			cube.setCoord(1f, 5f,1f);
 			cam.eye.x = -10f;
+			speed = 0;
 		}
 		if(jumping) {
 			float deltaTime = Gdx.graphics.getDeltaTime();
@@ -160,12 +163,15 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			if(floor.ontop(cube))
 			jumping = true;
 		}
-
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
-			cam.slide(0.0f, 0.0f, -10.0f * deltaTime);
+		cam.slide(0.0f, 0.0f, speed * deltaTime);
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)) { 
+			speed -= 0.2;
+		}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
-			cam.slide(0.0f, 0.0f, 10.0f * deltaTime);
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))  {
+			if(Math.round(speed)< 0)
+			      speed += 1;
+		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))  {
 			cube.z -= 10.0f * deltaTime;

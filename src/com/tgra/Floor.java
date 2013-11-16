@@ -89,7 +89,7 @@ public class Floor {
 	    cubes = new ArrayList<Cube>();
 
 		for(float fx = 0.0f; fx < 50; fx += 1.0) {
-			if(fx % 4 == 0)
+			if(fx % 16 == 0)
 				continue;
 			for(float fz = 0.0f; fz < 50/8; fz += 1.0) {
 					cubes.add(new Cube(fx,fz));
