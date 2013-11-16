@@ -106,7 +106,7 @@ public class Cube {
 //		Gdx.gl11.glNormal3f(0.0f, -1.0f, 0.0f);
 //		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 20, 4);
 		
-		Gdx.gl11.glScalef(0.15f, 0.15f, 0.15f);
+		Gdx.gl11.glScalef(0.15f, 0.15f, 0.12f);
 		Gdx.gl11.glRotatef(-270, 0,1, 0);
 		Gdx.gl11.glRotatef(180, 0,0, 1);
 		Gdx.gl11.glRotatef(90, 1,0, 0);
