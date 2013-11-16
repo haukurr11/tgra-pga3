@@ -22,10 +22,13 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private Floor floor;
 	private Tunnel tunnel;
 	private boolean jumping;
+	private boolean bouncing;
+	private boolean beginbounce;
 	FloatBuffer vertexBuffer;
 		
 	@Override
 	public void create() {
+		beginbounce = false;
 		jumping = false;
 		cube = new Cube();
 		floor = new Floor();
@@ -115,12 +118,26 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			cube.y += deltaTime * 20.5;
 			if(cube.y > 5.0) {
 				jumping = false;
+				beginbounce = true;
 			}
 		}
+		
 		if(!floor.collides(cube)) {
 			System.out.println("YES");
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			cube.y -= deltaTime * 9.0;
+		}
+		else if(beginbounce) {
+			bouncing = true;
+		}
+
+		if(bouncing) {
+			float deltaTime = Gdx.graphics.getDeltaTime();
+			cube.y += deltaTime * 20.5;
+			if(cube.y > 3.5) {
+				bouncing = false;
+				beginbounce = false;
+			}
 		}
 		
 		if(this.wiggleLights){
