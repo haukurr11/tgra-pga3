@@ -2,9 +2,11 @@ package com.tgra;
 import java.awt.peer.LightweightPeer;
 import java.nio.FloatBuffer;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -13,6 +15,9 @@ import com.badlogic.gdx.graphics.g3d.model.still.StillModel;
 
 public class First3D_Core implements ApplicationListener, InputProcessor
 {
+	Sound explosionsound;
+	Sound boingsound;
+	
 	Camera cam;
 	private boolean ligthBulbState = true;
 	private boolean wiggleLights = false;
@@ -30,6 +35,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 	@Override
 	public void create() {
+		explosionsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/bomb-03.ogg"));
+		boingsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/boing.ogg"));
 		speed = 0;
 		beginbounce = false;
 		jumping = false;
@@ -114,6 +121,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private void update() {
 		System.out.println(cube.x + " " + cube.y + " " + cube.z);
 		if(cube.y < -4.0 || floor.collides(cube)) {
+			explosionsound.play();
 			cube.setCoord(1f, 5f,1f);
 			cam.eye.x = -10f;
 			speed = 0;
@@ -160,8 +168,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) { 
-			if(floor.ontop(cube))
+			if(floor.ontop(cube)) {
 			jumping = true;
+			boingsound.play();
+
+			}
+			
 		}
 		cam.slide(0.0f, 0.0f, speed * deltaTime);
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)) { 
@@ -171,6 +183,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))  {
 			if(Math.round(speed)< 0)
 			      speed += 1;
+			if(Math.round(speed) == 0)
+				speed = 0;
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))  {
