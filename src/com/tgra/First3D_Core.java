@@ -37,6 +37,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float speed;
 	FloatBuffer vertexBuffer;
 	boolean shipstopped = true;
+	private DogeBox doge;
 		
 	@Override
 	public void create() {
@@ -56,6 +57,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		floor = new Floor();
 		cube.setCoord(cube.x, 2.0f, 1f);
 		skybox = new Skybox();
+		doge = new DogeBox();
 		
 		Gdx.input.setInputProcessor(this);
 		
@@ -304,6 +306,11 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
         Gdx.gl11.glPopMatrix();
 
+        Gdx.gl11.glPushMatrix();
+        Gdx.gl11.glTranslatef(this.cam.eye.x+5f, this.cam.eye.y, this.cam.eye.z+5f);
+        this.doge.draw();
+        Gdx.gl11.glPopMatrix();
+        
         floor.draw(cube);
 
         Gdx.gl11.glTranslatef(0,1f, 0f);
