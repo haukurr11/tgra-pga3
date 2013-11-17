@@ -117,7 +117,7 @@ public class Floor {
 			}
 	      }
 		
-		for(float fx = 320f; fx < 400f; fx += 1.0) {
+		for(float fx = 310f; fx < 400f; fx += 1.0) {
 			for(float fz = 10f; fz < 20; fz += 1.0) {
 					cubes.add(new Cube(fx,0,fz));
 			}
@@ -132,7 +132,7 @@ public class Floor {
 					cubes.add(new Cube(fx,0,fz));
 			}
 	      }
-		for(float fx = 540f; fx < 560f; fx += 1.0) {
+		for(float fx = 520f; fx < 560f; fx += 1.0) {
 			for(float fz = 10f; fz < 15; fz += 1.0) {
 					cubes.add(new Cube(fx,0,fz));
 			}
@@ -142,7 +142,28 @@ public class Floor {
 					cubes.add(new Cube(fx,0,fz));
 			}
 	      }
-		
+		for(float fx = 700f; fx < 900f; fx += 1.0) {
+			for(float fz = 10f; fz < 13; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+					if(fx % 35 == 0)
+						cubes.add(new Cube(fx,1,fz));
+			}
+	      }
+		for(float fx = 930f; fx < 990f; fx += 1.0) {
+			for(float fz = 10f; fz < 13; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+	      }
+		for(float fx = 1200f; fx < 1400f; fx += 1.0) {
+			for(float fz = 10f; fz <12f; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+	      }
+		for(float fx = 1500f; fx < 1800f; fx += 1.0) {
+			for(float fz = 10f; fz <12f; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+	      }
 	}
 	
 	public void draw(com.tgra.Shuttle shuttle) {

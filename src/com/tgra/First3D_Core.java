@@ -27,7 +27,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float wiggleValue = 0f;
 	private float count = 0;
 	private Skybox skybox;
-	private Ramp ramp;
+	private List<Ramp> ramps;
 	private Shuttle cube;
 	private Floor floor;
 	private List<Tunnel> tunnels;
@@ -40,7 +40,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 	@Override
 	public void create() {
-		ramp = new Ramp(90f,1f,12f);
+		ramps = new ArrayList<Ramp>();
+		ramps.add(new Ramp(90f,1f,12f));
+		ramps.add(new Ramp(680f,1f,11f));
+		ramps.add(new Ramp(900f,1f,11f));
+		ramps.add(new Ramp(1400f,1f,11f));
+
 		explosionsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/bomb-03.ogg"));
 		boingsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/boing.ogg"));
 		shipsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/ship.ogg"));
@@ -103,6 +108,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		for(int i = 0; i < 1; i++)
 			tunnels.add(new Tunnel(3+i,0,200,200));
 		
+		for(float i = 600;i<640;i+=3) {
+		tunnels.add(new Tunnel(i,9.25f,200,200));
+		}
+		for(float i = 990;i<1200;i+=3) {
+			tunnels.add(new Tunnel(i,9.25f,200,200));
+			}
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		cam = new Camera(new Point3D(-10.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
 	}
@@ -121,13 +132,16 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	
 	private void update() {
 
-		if(ramp.collides(cube)) {
-			cube.y += 4;
-			speed -= 1;
+		for(Ramp ramp : ramps) {
+			if(ramp.collides(cube)) {
+				cube.y += 0.1f*-speed;
+				System.out.println(speed);
+				speed = speed + 0.01f*speed;
+			}
 		}
 		boolean tunnelInside = false;
 		for(Tunnel t: tunnels)
-			if(t.inside(cube)) {
+			if(Math.abs(cube.x-t.x) < 5 && t.inside(cube)) {
 				tunnelInside = true;
 				cube.z = t.z+1;
 			}
@@ -139,6 +153,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			shipsound.stop();
 			shipsound.setPitch(0,0);
 			shipstopped = true;
+			cam = new Camera(new Point3D(-10.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
 		}
 		if(jumping) {
 			float deltaTime = Gdx.graphics.getDeltaTime();
@@ -151,7 +166,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		boolean tunnelOnTop = false;
 		for(Tunnel t : tunnels)
-			if(t.ontop(cube))
+			if(Math.abs(cube.x-t.x)<5 && t.ontop(cube))
 				tunnelOnTop = true;
 		if(!floor.ontop(cube) && !tunnelOnTop) {
 			float deltaTime = Gdx.graphics.getDeltaTime();
@@ -185,12 +200,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		boolean tunnelLeftCol = false;
 		for(Tunnel t : tunnels)
-			if(t.leftcol(cube))
+			if(Math.abs(cube.x-t.x)<5 && t.leftcol(cube))
 				tunnelLeftCol = true;
 
 		boolean tunnelRightCol = false;
 		for(Tunnel t : tunnels)
-			if(t.rightcol(cube))
+			if(Math.abs(cube.x-t.x)<5 && t.rightcol(cube))
 				tunnelRightCol = true;
 		
 
@@ -293,8 +308,10 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
         Gdx.gl11.glTranslatef(0,1f, 0f);
         for(Tunnel t : tunnels)
-        	t.draw();
-        ramp.draw();
+        	if(Math.abs(t.x-cube.x) < 100)
+        	 t.draw();
+        for(Ramp ramp : ramps)
+            ramp.draw();
 	}
 
 	@Override
