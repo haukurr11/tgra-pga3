@@ -70,7 +70,7 @@ public class DogeBox {
     }
         
         public DogeBox() {
-        	this.cube = new Cube("assets/textures/doge2.png");
+        	this.cube = new Cube("assets/textures/doge_win.png");
         }
         
         public void draw()
