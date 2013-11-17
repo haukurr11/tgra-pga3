@@ -137,6 +137,11 @@ public class Floor {
 					cubes.add(new Cube(fx,0,fz));
 			}
 	      }
+		for(float fx = 580f; fx < 680f; fx += 1.0) {
+			for(float fz = 10f; fz < 13; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+	      }
 		
 	}
 	
