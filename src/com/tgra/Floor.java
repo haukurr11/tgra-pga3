@@ -19,7 +19,8 @@ public class Floor {
 		public boolean ontop(com.tgra.Shuttle cube) {
 			if(Math.sqrt(Math.pow(cube.x-cube.x,2)+Math.pow(cube.z-cube.z,2)) > 40)
 				return false;
-			if(Math.round(cube.y-1) == 1 && Math.abs(Math.round(cube.x)-x) < 1 && Math.abs(Math.round(cube.z)-z) < 1) {
+			System.out.println(cube.y-y);
+			if(cube.y-(y+1) < 0.2 && Math.abs(Math.round(cube.x)-x) < 1 && Math.abs(Math.round(cube.z)-z) < 1) {
 				return true;
 			}
 			return false;
@@ -27,7 +28,7 @@ public class Floor {
 		public boolean collides(com.tgra.Shuttle cube) {
 			if(Math.sqrt(Math.pow(cube.x-cube.x,2)+Math.pow(cube.z-cube.z,2)) > 40)
 				return false;
-			if(cube.y < 2 && Math.abs(Math.round(cube.x)-x) < 0.5 && Math.abs(Math.round(cube.z)-z) < 0.5) {
+			if(cube.y-(y+1) < 0 && Math.abs(Math.round(cube.x)-x) < 0.5 && Math.abs(Math.round(cube.z)-z) < 0.5) {
 				return true;
 			}
 			return false;
@@ -95,7 +96,7 @@ public class Floor {
 	    cubes = new ArrayList<Cube>();
 
 		for(float fx = 0.0f; fx < 40; fx += 1.0) {
-			for(float fz = 0.0f; fz < 50/8; fz += 1.0) {
+			for(float fz = 0.0f; fz < 5; fz += 1.0) {
 					cubes.add(new Cube(fx,0,fz));
 			}
 	      }
@@ -106,7 +107,7 @@ public class Floor {
 	      }
 
 		for(float fx = 90f; fx < 120f; fx += 1.0) {
-			for(float fz = 0f; fz < 50/8; fz += 1.0) {
+			for(float fz = 0f; fz < 5; fz += 1.0) {
 					cubes.add(new Cube(fx,0,fz));
 			}
 	      }
@@ -114,7 +115,7 @@ public class Floor {
 		for(float fx = 90f; fx < 120f; fx += 1.0) {
 			if(fx % 4 == 0)
 				continue;
-			for(float fz = 3f; fz < 50/8; fz += 1.0) {
+			for(float fz = 3f; fz < 5; fz += 1.0) {
 					cubes.add(new Cube(fx,1,fz));
 			}
 	      }
@@ -125,8 +126,13 @@ public class Floor {
 		float[] materialDiffuse2 = {0f, 2f,0f, 0.0f};
 		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse2, 0);
 		for(Cube cube : cubes) {
-			if(Math.sqrt(Math.pow(shuttle.x-cube.x,2)+Math.pow(shuttle.z-cube.z,2)) < 40)
-			   cube.draw();
+			if(Math.sqrt(Math.pow(shuttle.x-cube.x,2)+Math.pow(shuttle.z-cube.z,2)) < 40) {
+			   if(cube.y > 0) {
+					float[] materialDiffuse3 = {2f, 0f,0f, 0.0f};
+					Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse3, 0);
+			   }
+				cube.draw();
+			}
 		}
 	}
 	public boolean ontop(com.tgra.Shuttle shuttle) {
