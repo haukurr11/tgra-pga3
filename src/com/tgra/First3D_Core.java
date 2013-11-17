@@ -41,9 +41,13 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	boolean shipstopped = true;
 	private DogeFinish doge;
 	boolean finished = false;
+	int doges;
 		
+	private DogeBox dogebox;
 	@Override
 	public void create() {
+		doges = 0;
+		dogebox = new DogeBox();
 		ramps = new ArrayList<Ramp>();
 		ramps.add(new Ramp(90f,1f,12f));
 		ramps.add(new Ramp(680f,1f,11f));
@@ -145,6 +149,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		applause.play();
 		shipsound.stop();
 		finishtime = System.nanoTime();
+		doges++;
 		}
 		if(finished) {
 			if(System.nanoTime()-finishtime >11249624956L) {
@@ -334,6 +339,18 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
         Gdx.gl11.glPopMatrix();
 
+        
+
+        for(int i=0;i<doges;i++) {
+            Gdx.gl11.glPushMatrix();
+
+        Gdx.gl11.glTranslatef(this.cam.eye.x+5f, this.cam.eye.y+4f, this.cam.eye.z-6f+(i*1.1f));
+        this.dogebox.draw();
+        Gdx.gl11.glPopMatrix();
+
+        }
+        
+        
         Gdx.gl11.glPushMatrix();
         this.doge.draw();
         Gdx.gl11.glPopMatrix();
