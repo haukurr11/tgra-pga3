@@ -19,7 +19,8 @@ public class Floor {
 		public boolean ontop(com.tgra.Shuttle cube) {
 			if(Math.sqrt(Math.pow(cube.x-cube.x,2)+Math.pow(cube.z-cube.z,2)) > 40)
 				return false;
-			if(Math.round(cube.y-1) == 1 && Math.abs(Math.round(cube.x)-x) < 1 && Math.abs(Math.round(cube.z)-z) < 1) {
+			System.out.println(cube.y-y);
+			if(cube.y-(y+1) < 0.2 && Math.abs(Math.round(cube.x)-x) < 1 && Math.abs(Math.round(cube.z)-z) < 1) {
 				return true;
 			}
 			return false;
@@ -27,7 +28,7 @@ public class Floor {
 		public boolean collides(com.tgra.Shuttle cube) {
 			if(Math.sqrt(Math.pow(cube.x-cube.x,2)+Math.pow(cube.z-cube.z,2)) > 40)
 				return false;
-			if(cube.y < 2 && Math.abs(Math.round(cube.x)-x) < 0.5 && Math.abs(Math.round(cube.z)-z) < 0.5) {
+			if(cube.y-(y+1) < 0 && Math.abs(Math.round(cube.x)-x) < 0.5 && Math.abs(Math.round(cube.z)-z) < 0.5) {
 				return true;
 			}
 			return false;
