@@ -307,7 +307,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
         Gdx.gl11.glPopMatrix();
 
         Gdx.gl11.glPushMatrix();
-        Gdx.gl11.glTranslatef(this.cam.eye.x+5f, this.cam.eye.y, this.cam.eye.z+5f);
+        Gdx.gl11.glTranslatef(this.cam.eye.x+2f, this.cam.eye.y+2f, this.cam.eye.z-3f);
         this.doge.draw();
         Gdx.gl11.glPopMatrix();
         
