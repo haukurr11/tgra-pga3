@@ -95,7 +95,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		vertexBuffer.rewind();
 		
-		tunnel = new Tunnel(200,200);
+		tunnel = new Tunnel(0,0,200,200);
 		
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		cam = new Camera(new Point3D(-10.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
@@ -114,7 +114,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
-		System.out.println(cube.x + " " + cube.y + " " + cube.z);
+		
 		if(cube.y < -4.0 || floor.collides(cube)) {
 			explosionsound.play();
 			cube.setCoord(1f, 5f,1f);
@@ -133,7 +133,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			}
 		}
 		
-		if(!floor.ontop(cube)) {
+		if(!floor.ontop(cube) && !tunnel.ontop(cube)) {
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			cube.y -= deltaTime * 9.0;
 		}
@@ -166,7 +166,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) { 
-			if(floor.ontop(cube)) {
+			if(floor.ontop(cube) || tunnel.ontop(cube)) {
 			jumping = true;
 			boingsound.play();
 

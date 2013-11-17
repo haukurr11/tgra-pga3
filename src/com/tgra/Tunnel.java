@@ -1,6 +1,8 @@
 package com.tgra;
 
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
@@ -14,8 +16,21 @@ public class Tunnel {
 	Vector3D[][] normals;
 	int widthRes;
 	int depthRes;
+	float x;
+	float z;
+	
+	public boolean ontop(Cube cube) {
+		System.out.println("YES");
+		for(int i=0;i<points.length;i++)
+			for(int j=0;j<points[i].length;j++)
+				if(Math.abs(points[i][j].y-cube.y) < 1 &&Math.abs(points[i][j].z-cube.z)<1&&Math.abs(points[i][j].x-cube.x)<1)
+					return true;
+		return false;
+	}
 	
 	public Tunnel(float x, float z,int widthRes, int depthRes) {
+		this.x = x;
+		this.z = z;
 		this.widthRes = widthRes;
 		this.depthRes = depthRes;
 		this.createBicubicBezierPatch(x, z);

@@ -21,7 +21,6 @@ public class Floor {
 			return false;
 		}
 		public boolean collides(com.tgra.Cube cube) {
-			System.out.println(cube.y);
 			if(cube.y < 2 && Math.abs(Math.round(cube.x)-x) < 0.5 && Math.abs(Math.round(cube.z)-z) < 0.5) {
 				return true;
 			}
