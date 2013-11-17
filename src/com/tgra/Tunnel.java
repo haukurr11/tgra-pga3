@@ -19,15 +19,35 @@ public class Tunnel {
 	float x;
 	float z;
 	
-	public boolean ontop(Cube cube) {
-		System.out.println("YES");
+	public boolean ontop(Shuttle cube) {
 		for(int i=0;i<points.length;i++)
 			for(int j=0;j<points[i].length;j++)
-				if(Math.abs(points[i][j].y-cube.y) < 1 &&Math.abs(points[i][j].z-cube.z)<1&&Math.abs(points[i][j].x-cube.x)<1)
+				if(Math.abs(points[i][j].y-cube.y) < 1.5 
+				&& Math.abs(points[i][j].z-cube.z)<0.5
+				&& Math.abs(points[i][j].x-cube.x)<0.5)
 					return true;
 		return false;
 	}
-	
+	public boolean leftcol(Shuttle cube) {
+		for(int i=0;i<points.length;i++)
+			for(int j=0;j<points[i].length;j++)
+				if(Math.round(Math.abs(points[i][j].y-cube.y)) <= 0 
+				&& points[i][j].z-cube.z < 0 && points[i][j].z-cube.z > -1
+				&& Math.round(Math.abs(points[i][j].x-cube.x)) <= 0
+				) {
+					return true;
+				}
+		return false;
+	}
+	public boolean rightcol(Shuttle cube) {
+		for(int i=0;i<points.length;i++)
+			for(int j=0;j<points[i].length;j++)
+				if(Math.abs(points[i][j].y-cube.y) < 1 
+				&& cube.z-points[i][j].z < 0 && cube.z-points[i][j].z > -1
+				&& Math.round(Math.abs(points[i][j].x-cube.x)) <= 0)
+					return true;
+		return false;
+	}
 	public Tunnel(float x, float z,int widthRes, int depthRes) {
 		this.x = x;
 		this.z = z;
@@ -177,6 +197,8 @@ public class Tunnel {
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		Gdx.gl11.glNormalPointer(GL11.GL_FLOAT, 0, normalBuffer);
 
+		float[] materialDiffuse2 = {1f, 1f,2f, 0.0f};
+		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse2, 0);
 		for (int i = 0; i < widthRes; i++) {
 			Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, i * (depthRes + 1)
 					* 2, (depthRes + 1) * 2);

@@ -25,7 +25,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float wiggleValue = 0f;
 	private float count = 0;
 	private Skybox skybox;
-	private Cube cube;
+	private Shuttle cube;
 	private Floor floor;
 	private Tunnel tunnel;
 	private boolean jumping;
@@ -43,9 +43,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		speed = 0;
 		beginbounce = false;
 		jumping = false;
-		cube = new Cube();
+		cube = new Shuttle();
 		floor = new Floor();
-		cube.setCoord(cube.x, 5.0f, 1f);
+		cube.setCoord(cube.x, 2.0f, 1f);
 		skybox = new Skybox();
 		
 		Gdx.input.setInputProcessor(this);
@@ -95,7 +95,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		vertexBuffer.rewind();
 		
-		tunnel = new Tunnel(0,0,200,200);
+		tunnel = new Tunnel(3,0,200,200);
 		
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		cam = new Camera(new Point3D(-10.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
@@ -117,7 +117,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		if(cube.y < -4.0 || floor.collides(cube)) {
 			explosionsound.play();
-			cube.setCoord(1f, 5f,1f);
+			cube.setCoord(1f, 2f,1f);
 			cam.eye.x = -10f;
 			speed = 0;
 			shipsound.stop();
@@ -194,10 +194,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))  {
+			if(!tunnel.leftcol(cube))
 			cube.z -= 10.0f * deltaTime;
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) { 
+			if(!tunnel.rightcol(cube))
 			cube.z +=10.0f * deltaTime;
 		}
 		
@@ -260,7 +262,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
         Gdx.gl11.glPopMatrix();
 
-        floor.draw();
+        floor.draw(cube);
 
         Gdx.gl11.glTranslatef(0,1f, 0f);
         this.tunnel.draw();
