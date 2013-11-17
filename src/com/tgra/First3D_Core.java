@@ -1,6 +1,8 @@
 package com.tgra;
 import java.awt.peer.LightweightPeer;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL11;
@@ -27,7 +29,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private Skybox skybox;
 	private Shuttle cube;
 	private Floor floor;
-	private Tunnel tunnel;
+	private List<Tunnel> tunnels;
 	private boolean jumping;
 	private boolean bouncing;
 	private boolean beginbounce;
@@ -95,7 +97,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 		vertexBuffer.rewind();
 		
-		tunnel = new Tunnel(3,0,200,200);
+		tunnels = new ArrayList<Tunnel>();
+		for(int i = 0; i < 20; i++)
+			tunnels.add(new Tunnel(3+i,0,200,200));
 		
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		cam = new Camera(new Point3D(-10.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
@@ -133,7 +137,11 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			}
 		}
 		
-		if(!floor.ontop(cube) && !tunnel.ontop(cube)) {
+		boolean tunnelOnTop = false;
+		for(Tunnel t : tunnels)
+			if(t.ontop(cube))
+				tunnelOnTop = true;
+		if(!floor.ontop(cube) && !tunnelOnTop) {
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			cube.y -= deltaTime * 9.0;
 		}
@@ -166,7 +174,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) { 
-			if(floor.ontop(cube) || tunnel.ontop(cube)) {
+			if(floor.ontop(cube) || tunnelOnTop) {
 			jumping = true;
 			boingsound.play();
 
@@ -193,13 +201,23 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			}
 		}
 		
+		boolean tunnelLeftCol = false;
+		for(Tunnel t : tunnels)
+			if(t.leftcol(cube))
+				tunnelLeftCol = true;
+		
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))  {
-			if(!tunnel.leftcol(cube))
-			cube.z -= 10.0f * deltaTime;
+			if(!tunnelLeftCol)
+				cube.z -= 10.0f * deltaTime;
 		}
 		
+		boolean tunnelRightCol = false;
+		for(Tunnel t : tunnels)
+			if(t.rightcol(cube))
+				tunnelRightCol = true;
+		
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) { 
-			if(!tunnel.rightcol(cube))
+			if(!tunnelRightCol)
 			cube.z +=10.0f * deltaTime;
 		}
 		
@@ -265,7 +283,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
         floor.draw(cube);
 
         Gdx.gl11.glTranslatef(0,1f, 0f);
-        this.tunnel.draw();
+        for(Tunnel t : tunnels)
+        	t.draw();
 	}
 
 	@Override
