@@ -163,7 +163,12 @@ public class Floor {
 			for(float fz = 10f; fz <12f; fz += 1.0) {
 					cubes.add(new Cube(fx,0,fz));
 			}
-	      }
+        }
+		for(float fx = 1820f; fx < 2000f; fx += 1.0) {
+			for(float fz = 14f; fz <18f; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+        }
 	}
 	
 	public void draw(com.tgra.Shuttle shuttle) {

@@ -20,6 +20,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	Sound explosionsound;
 	Sound boingsound;
 	Sound shipsound;
+	Sound applause;
+	long finishtime;
 	
 	Camera cam;
 	private boolean ligthBulbState = true;
@@ -37,7 +39,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float speed;
 	FloatBuffer vertexBuffer;
 	boolean shipstopped = true;
-	private DogeBox doge;
+	private DogeFinish doge;
+	boolean finished = false;
 		
 	@Override
 	public void create() {
@@ -46,10 +49,13 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		ramps.add(new Ramp(680f,1f,11f));
 		ramps.add(new Ramp(900f,1f,11f));
 		ramps.add(new Ramp(1400f,1f,11f));
+		ramps.add(new Ramp(2000f,1f,15f));
+
 
 		explosionsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/bomb-03.ogg"));
 		boingsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/boing.ogg"));
 		shipsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/ship.ogg"));
+		applause = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/applause.ogg"));
 		speed = 0;
 		beginbounce = false;
 		jumping = false;
@@ -57,7 +63,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		floor = new Floor();
 		cube.setCoord(cube.x, 2.0f, 1f);
 		skybox = new Skybox();
-		doge = new DogeBox();
+		doge = new DogeFinish(2100f,5f,10f);
 		
 		Gdx.input.setInputProcessor(this);
 		
@@ -133,6 +139,28 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
+		if(!finished && cube.x-30f > doge.x)
+		{
+		finished = true;
+		applause.play();
+		shipsound.stop();
+		finishtime = System.nanoTime();
+		}
+		if(finished) {
+			if(System.nanoTime()-finishtime >11249624956L) {
+				finished = false;
+				cube.setCoord(1f, 2f,1f);
+				cam.eye.x = -10f;
+				speed = 0;
+				shipsound.stop();
+				shipsound.setPitch(0,0);
+				shipstopped = true;
+				cam = new Camera(new Point3D(-10.0f, 7f, 5.0f), new Point3D(200.0f, 7f, 6.0f), new Vector3D(0.0f, 1.0f, 0.0f));
+
+			}
+			
+			return;
+		}
 
 		for(Ramp ramp : ramps) {
 			if(ramp.collides(cube)) {
@@ -307,7 +335,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
         Gdx.gl11.glPopMatrix();
 
         Gdx.gl11.glPushMatrix();
-        Gdx.gl11.glTranslatef(this.cam.eye.x+5f, this.cam.eye.y, this.cam.eye.z+5f);
         this.doge.draw();
         Gdx.gl11.glPopMatrix();
         
