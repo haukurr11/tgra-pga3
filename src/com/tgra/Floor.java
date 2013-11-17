@@ -19,7 +19,6 @@ public class Floor {
 		public boolean ontop(com.tgra.Shuttle cube) {
 			if(Math.sqrt(Math.pow(cube.x-cube.x,2)+Math.pow(cube.z-cube.z,2)) > 40)
 				return false;
-			System.out.println(cube.y-y);
 			if(cube.y-(y+1) < 0.2 && Math.abs(Math.round(cube.x)-x) < 1 && Math.abs(Math.round(cube.z)-z) < 1) {
 				return true;
 			}
@@ -106,19 +105,39 @@ public class Floor {
 			}
 	      }
 
-		for(float fx = 90f; fx < 120f; fx += 1.0) {
-			for(float fz = 0f; fz < 5; fz += 1.0) {
+		for(float fx = 150f; fx < 190f; fx += 1.0) {
+			for(float fz = 10f; fz < 20; fz += 1.0) {
 					cubes.add(new Cube(fx,0,fz));
 			}
 	      }
 
-		for(float fx = 90f; fx < 120f; fx += 1.0) {
-			if(fx % 4 == 0)
-				continue;
-			for(float fz = 3f; fz < 5; fz += 1.0) {
+		for(float fx = 190f; fx < 300f; fx += 1.0) {
+			for(float fz = 15f; fz < 17; fz += 1.0) {
 					cubes.add(new Cube(fx,1,fz));
 			}
 	      }
+		
+		for(float fx = 320f; fx < 400f; fx += 1.0) {
+			for(float fz = 10f; fz < 20; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+	      }
+		for(float fx = 420f; fx < 480f; fx += 1.0) {
+			for(float fz = 10f; fz < 15; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+	      }
+		for(float fx = 500f; fx < 520f; fx += 1.0) {
+			for(float fz = 10f; fz < 15; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+	      }
+		for(float fx = 540f; fx < 560f; fx += 1.0) {
+			for(float fz = 10f; fz < 15; fz += 1.0) {
+					cubes.add(new Cube(fx,0,fz));
+			}
+	      }
+		
 	}
 	
 	public void draw(com.tgra.Shuttle shuttle) {

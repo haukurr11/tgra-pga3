@@ -27,6 +27,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float wiggleValue = 0f;
 	private float count = 0;
 	private Skybox skybox;
+	private Ramp ramp;
 	private Shuttle cube;
 	private Floor floor;
 	private List<Tunnel> tunnels;
@@ -39,6 +40,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 	@Override
 	public void create() {
+		ramp = new Ramp(90f,1f,12f);
 		explosionsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/bomb-03.ogg"));
 		boingsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/boing.ogg"));
 		shipsound = Gdx.audio.newSound(Gdx.files.internal("assets/sounds/ship.ogg"));
@@ -118,7 +120,11 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
-		System.out.println(tunnels.get(0).inside(cube));
+
+		if(ramp.collides(cube)) {
+			cube.y += 4;
+			speed -= 1;
+		}
 		boolean tunnelInside = false;
 		for(Tunnel t: tunnels)
 			if(t.inside(cube)) {
@@ -253,7 +259,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	
 	private void display() {
 
-		
         Gdx.gl11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
         cam.setModelViewMatrix();
                         
@@ -289,6 +294,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
         Gdx.gl11.glTranslatef(0,1f, 0f);
         for(Tunnel t : tunnels)
         	t.draw();
+        ramp.draw();
 	}
 
 	@Override
