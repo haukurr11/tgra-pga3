@@ -98,7 +98,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		vertexBuffer.rewind();
 		
 		tunnels = new ArrayList<Tunnel>();
-		for(int i = 0; i < 20; i++)
+		for(int i = 0; i < 1; i++)
 			tunnels.add(new Tunnel(3+i,0,200,200));
 		
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
@@ -118,7 +118,13 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
-		
+		System.out.println(tunnels.get(0).inside(cube));
+		boolean tunnelInside = false;
+		for(Tunnel t: tunnels)
+			if(t.inside(cube)) {
+				tunnelInside = true;
+				cube.z = t.z+1;
+			}
 		if(cube.y < -4.0 || floor.collides(cube)) {
 			explosionsound.play();
 			cube.setCoord(1f, 2f,1f);
@@ -171,15 +177,22 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			Gdx.gl11.glDisable(GL11.GL_LIGHT0);
 		
 		float deltaTime = Gdx.graphics.getDeltaTime();
+		boolean tunnelLeftCol = false;
+		for(Tunnel t : tunnels)
+			if(t.leftcol(cube))
+				tunnelLeftCol = true;
 
+		boolean tunnelRightCol = false;
+		for(Tunnel t : tunnels)
+			if(t.rightcol(cube))
+				tunnelRightCol = true;
+		
 
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) { 
-			if(floor.ontop(cube) || tunnelOnTop) {
+			if(!tunnelInside && (floor.ontop(cube) || tunnelOnTop)) {
 			jumping = true;
 			boingsound.play();
-
 			}
-			
 		}
 		cam.slide(0.0f, 0.0f, speed * deltaTime);
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)) { 
@@ -201,20 +214,11 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			}
 		}
 		
-		boolean tunnelLeftCol = false;
-		for(Tunnel t : tunnels)
-			if(t.leftcol(cube))
-				tunnelLeftCol = true;
-		
+
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))  {
 			if(!tunnelLeftCol)
 				cube.z -= 10.0f * deltaTime;
 		}
-		
-		boolean tunnelRightCol = false;
-		for(Tunnel t : tunnels)
-			if(t.rightcol(cube))
-				tunnelRightCol = true;
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) { 
 			if(!tunnelRightCol)

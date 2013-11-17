@@ -16,10 +16,12 @@ public class Tunnel {
 	Vector3D[][] normals;
 	int widthRes;
 	int depthRes;
-	float x;
-	float z;
+	public float x;
+	public float z;
 	
 	public boolean ontop(Shuttle cube) {
+		if(Math.abs(z-cube.z)>2 && Math.abs(x-cube.x)>2)
+			return false;
 		for(int i=0;i<points.length;i++)
 			for(int j=0;j<points[i].length;j++)
 				if(Math.abs(points[i][j].y-cube.y) < 1.5 
@@ -38,6 +40,9 @@ public class Tunnel {
 					return true;
 				}
 		return false;
+	}
+	public boolean inside(Shuttle shuttle) {
+			return Math.round(shuttle.z) == Math.round(this.z+1) &&Math.abs(shuttle.x-(this.x+2)) < 3 && Math.round(shuttle.y) == 1;
 	}
 	public boolean rightcol(Shuttle cube) {
 		for(int i=0;i<points.length;i++)
