@@ -62,7 +62,9 @@ public class Ramp {
 		Gdx.gl11.glTranslatef(x, y, z);
 		Gdx.gl11.glScalef(2.95f, 2.95f, 2.95f);
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
+		   float[] materialDiffuse2 = {0f, 2f,3f, 0.0f};
+			Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse2, 0);  
+//		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
 //		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 //		Gdx.gl11.glNormal3f(1.0f, 0.0f, 0.0f);
 //		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 4, 4);
@@ -70,7 +72,7 @@ public class Ramp {
 //		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 8, 4);
 //		Gdx.gl11.glNormal3f(-1.0f, 0.0f, 0.0f);
 //		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 12, 4);
-//		Gdx.gl11.glNormal3f(0.0f, 1.0f, 0.0f);
+		Gdx.gl11.glNormal3f(0.0f, 1.0f, 0.0f);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 16, 4);
 //		Gdx.gl11.glNormal3f(0.0f, -1.0f, 0.0f);
 //		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 20, 4);

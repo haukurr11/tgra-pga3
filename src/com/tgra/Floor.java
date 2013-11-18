@@ -95,7 +95,7 @@ public class Floor {
 	    cubes = new ArrayList<Cube>();
 
 		for(float fx = 0.0f; fx < 40; fx += 1.0) {
-			for(float fz = 0.0f; fz < 5; fz += 1.0) {
+			for(float fz = 0.0f; fz < 3; fz += 1.0) {
 					cubes.add(new Cube(fx,0,fz));
 			}
 	      }
@@ -173,13 +173,15 @@ public class Floor {
 	
 	public void draw(com.tgra.Shuttle shuttle) {
 
-		float[] materialDiffuse2 = {0f, 2f,0f, 0.0f};
-		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse2, 0);
 		for(Cube cube : cubes) {
 			if(Math.sqrt(Math.pow(shuttle.x-cube.x,2)+Math.pow(shuttle.z-cube.z,2)) < 40) {
 			   if(cube.y > 0) {
 					float[] materialDiffuse3 = {2f, 0f,0f, 0.0f};
 					Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse3, 0);
+			   }
+			   else {
+				   float[] materialDiffuse2 = {0f, 2f,0f, 0.0f};
+					Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse2, 0);   
 			   }
 				cube.draw();
 			}
