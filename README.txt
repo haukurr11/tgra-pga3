@@ -6,6 +6,9 @@ Left - Turn left
 Right - Turn right
 Space - Jump (Watch for the bounce!)
 
+The goal of the game is to get to the end point and collect dogs.
+The amount of dogs you have will display on the top of the screen.
+
 How to run:
 just build in eclipse and run it.
 If the games is too hard, here is a gameplay video:
