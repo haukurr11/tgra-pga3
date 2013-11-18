@@ -19,7 +19,7 @@ public class Floor {
 		public boolean ontop(com.tgra.Shuttle cube) {
 			if(Math.sqrt(Math.pow(cube.x-cube.x,2)+Math.pow(cube.z-cube.z,2)) > 40)
 				return false;
-			if(cube.y-(y+1) <= 0.1 && Math.abs(Math.round(cube.x)-x) < 1 && Math.abs(Math.round(cube.z)-z) < 1) {
+			if(cube.y-(y) <= 0.7 && Math.abs(Math.round(cube.x)-x) < 1 && Math.abs(Math.round(cube.z)-z) < 1) {
 				return true;
 			}
 			return false;
@@ -145,8 +145,10 @@ public class Floor {
 		for(float fx = 700f; fx < 900f; fx += 1.0) {
 			for(float fz = 10f; fz < 13; fz += 1.0) {
 					cubes.add(new Cube(fx,0,fz));
-					if(fx % 35 == 0)
+					if(fx % 35 == 0) {
 						cubes.add(new Cube(fx,1,fz));
+						cubes.add(new Cube(fx,1+1,fz));
+					}
 			}
 	      }
 		for(float fx = 930f; fx < 990f; fx += 1.0) {

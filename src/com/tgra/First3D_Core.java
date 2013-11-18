@@ -50,7 +50,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		dogebox = new DogeBox();
 		ramps = new ArrayList<Ramp>();
 		ramps.add(new Ramp(90f,1f,12f));
-		ramps.add(new Ramp(680f,1f,11f));
+		//ramps.add(new Ramp(680f,1f,11f));
 		ramps.add(new Ramp(900f,1f,11f));
 		ramps.add(new Ramp(1400f,1f,11f));
 		ramps.add(new Ramp(2000f,1f,15f));
